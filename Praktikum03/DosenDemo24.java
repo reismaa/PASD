@@ -30,20 +30,22 @@ public class DosenDemo24 {
             arrayOfDosen[i] = new Dosen24(kode, nama, jenisKelamin, usia);
         }
 
-        int no = 1;
-        for (Dosen24 dosen : arrayOfDosen) {
-            System.out.println("Data Dosen ke-" + no++);
-            System.out.println("Kode          : " + dosen.kode);
-            System.out.println("Nama          : " + dosen.nama);
-            
-            if (dosen.jenisKelamin) {
-                System.out.println("Jenis Kelamin : Pria");
-            } else {
-                System.out.println("Jenis Kelamin : Wanita");
-            }
-            System.out.println("Usia          : " + dosen.usia);
-            System.out.println("-----------------------------");
-        }
+        DataDosen24 data = new DataDosen24();
+
+        System.out.println("\n===== Semua Data Dosen =====");
+        data.dataSemuaDosen(arrayOfDosen);
+
+        System.out.println("\n===== Jumlah Dosen Per Jenis Kelamin =====");
+        data.jumlahDosenPerJenisKelamin(arrayOfDosen);
+
+        System.out.println("\n===== Rata-Rata Usia Dosen =====");
+        data.rerataUsiaDosenPerJenisKelamin(arrayOfDosen);
+
+        System.out.println("\n===== Dosen Paling Tua =====");
+        data.infoDosenPalingTua(arrayOfDosen);
+
+        System.out.println("\n===== Dosen Paling Muda =====");
+        data.infoDosenPalingMuda(arrayOfDosen);
 
         sc.close();
 
