@@ -31,8 +31,4 @@ public class Peminjaman {
         System.out.println(mhs.nama + " | " + buku.judul + " | Lama: " + lamaPinjam + " | Terlambat: " + terlambat + " | Denda: " + denda);
     }
 
-    public void tampil() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'tampil'");
-    }
 }
