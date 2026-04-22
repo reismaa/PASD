@@ -3,6 +3,7 @@ package CaseMethod1;
 import java.util.Scanner;
 
 public class SistemPeminjamanMain {
+
     static void tampilMenu() {
         System.out.println("\n=== SISTEM PEMINJAMAN RUANG BACA JTI ===");
         System.out.println("1. Tampilkan Mahasiswa");
@@ -10,6 +11,8 @@ public class SistemPeminjamanMain {
         System.out.println("3. Tampilkan Peminjaman");
         System.out.println("4. Urutkan Berdasarkan Denda");
         System.out.println("5. Cari Berdasarkan NIM");
+        System.out.println("6. Tambah Data Peminjaman Baru");
+        System.out.println("7. Tampilkan Statistik");
         System.out.println("0. Keluar");
     }
 
@@ -21,43 +24,183 @@ public class SistemPeminjamanMain {
     }
 
     static void tampilBuku(Buku[] buku) {
-        System.out.println("\nDaftar Buku: ");
+        System.out.println("\nDaftar Buku:");
         for (Buku b : buku) {
             b.tampilBuku();
         }
     }
 
     static void tampilPeminjaman(Peminjaman[] peminjaman) {
-        System.out.println("\nData Peminjaman: ");
+        System.out.println("\nData Peminjaman:");
         for (Peminjaman pin : peminjaman) {
             pin.tampilPeminjaman();
         }
     }
 
-    // Insertion sort berdasarkan denda terbesar
+    // INSERTION SORT BERDASARKAN DENDA TERBESAR
     static void sortDenda(Peminjaman[] p) {
         for (int i = 1; i < p.length; i++) {
             Peminjaman key = p[i];
             int j = i - 1;
+
             while (j >= 0 && p[j].denda < key.denda) {
                 p[j + 1] = p[j];
                 j--;
             }
+
             p[j + 1] = key;
         }
     }
 
-    static void cariNIM(Peminjaman[] p, String nim) {
-        boolean ketemu = false;
-        for (Peminjaman pin : p) {
-            if (pin.mhs.nim.equals(nim)) {
-                pin.tampilPeminjaman();
-                ketemu = true;
+    // SORT BERDASARKAN NIM (ASCENDING)
+    static void sortNIM(Peminjaman[] p) {
+        for (int i = 1; i < p.length; i++) {
+
+            Peminjaman key = p[i];
+            int j = i - 1;
+
+            while (j >= 0 && p[j].mhs.nim.compareTo(key.mhs.nim) > 0) {
+                p[j + 1] = p[j];
+                j--;
+            }
+
+            p[j + 1] = key;
+        }
+    }
+
+    // BINARY SEARCH NIM
+    static void binarySearchNIM(Peminjaman[] p, String nim) {
+
+        int left = 0;
+        int right = p.length - 1;
+        int mid;
+        int index = -1;
+
+        while (left <= right) {
+
+            mid = (left + right) / 2;
+
+            int hasil = p[mid].mhs.nim.compareTo(nim);
+
+            if (hasil == 0) {
+                index = mid;
+                break;
+            } 
+            else if (hasil < 0) {
+                left = mid + 1;
+            } 
+            else {
+                right = mid - 1;
             }
         }
-        if (!ketemu) {
-            System.out.println("Mahasiswa dengan NIM " + nim + " tidak ditemukan.");
+
+        if (index == -1) {
+            System.out.println("Data tidak ditemukan!");
+            return;
         }
+
+        System.out.println("[Binary Search] Data ditemukan:");
+
+        int i = index;
+
+        while (i >= 0 && p[i].mhs.nim.equals(nim)) {
+            p[i].tampilPeminjaman();
+            i--;
+        }
+
+        i = index + 1;
+
+        while (i < p.length && p[i].mhs.nim.equals(nim)) {
+            p[i].tampilPeminjaman();
+            i++;
+        }
+    }
+
+    // CARI MAHASISWA
+    static Mahasiswa cariMahasiswa(Mahasiswa[] mhs, String nim) {
+        for (Mahasiswa m : mhs) {
+            if (m.nim.equals(nim)) {
+                return m;
+            }
+        }
+        return null;
+    }
+
+    // CARI BUKU
+    static Buku cariBuku(Buku[] buku, String kode) {
+        for (Buku b : buku) {
+            if (b.kode.equals(kode)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    // MENU 6 TAMBAH PEMINJAMAN
+    static Peminjaman[] tambahPeminjaman(Peminjaman[] pinjam, Mahasiswa[] mhs, Buku[] buku, Scanner sc) {
+
+        System.out.print("Masukkan NIM: ");
+        String nim = sc.nextLine();
+
+        Mahasiswa m = cariMahasiswa(mhs, nim);
+
+        if (m == null) {
+            System.out.println("NIM tidak ditemukan!");
+            return pinjam;
+        }
+
+        System.out.print("Masukkan Kode Buku: ");
+        String kode = sc.nextLine();
+
+        Buku b = cariBuku(buku, kode);
+
+        if (b == null) {
+            System.out.println("Kode buku tidak ditemukan!");
+            return pinjam;
+        }
+
+        System.out.print("Masukkan Lama Pinjam: ");
+        int lama = sc.nextInt();
+        sc.nextLine();
+
+        Peminjaman baru = new Peminjaman(m, b, lama);
+
+        Peminjaman[] temp = new Peminjaman[pinjam.length + 1];
+
+        for (int i = 0; i < pinjam.length; i++) {
+            temp[i] = pinjam[i];
+        }
+
+        temp[pinjam.length] = baru;
+
+        System.out.println("Data peminjaman berhasil ditambahkan!");
+
+        return temp;
+    }
+
+    // MENU 7 STATISTIK
+    static void tampilStatistik(Peminjaman[] pinjam) {
+
+        int totalDenda = 0;
+        int jumlahTerlambat = 0;
+        int jumlahTepat = 0;
+
+        for (Peminjaman p : pinjam) {
+
+            totalDenda += p.denda;
+
+            if (p.terlambat > 0) {
+                jumlahTerlambat++;
+            } 
+            else {
+                jumlahTepat++;
+            }
+        }
+
+        System.out.println("\n=== STATISTIK PEMINJAMAN ===");
+        System.out.println("Total Denda Keseluruhan: Rp " + totalDenda);
+        System.out.println("Jumlah Peminjaman Terlambat: " + jumlahTerlambat);
+        System.out.println("Jumlah Peminjaman Tepat Waktu: " + jumlahTepat);
     }
 
     public static void main(String[] args) {
@@ -88,7 +231,7 @@ public class SistemPeminjamanMain {
             tampilMenu();
             System.out.print("Pilih: ");
             pilih = sc.nextInt();
-            sc.nextLine(); 
+            sc.nextLine();
 
             switch (pilih) {
                 case 1:
@@ -101,7 +244,7 @@ public class SistemPeminjamanMain {
                     tampilPeminjaman(pinjam);
                     break;
                 case 4:
-                    System.out.println("\nSetelah diurutkan (Denda terbesar):");
+                    System.out.println("\nSetelah diurutkan dengan Insertion Sort (Denda terbesar):");
                     sortDenda(pinjam);
                     for (Peminjaman p : pinjam) {
                         p.tampilPeminjaman();
@@ -110,14 +253,24 @@ public class SistemPeminjamanMain {
                 case 5:
                     System.out.print("\nMasukkan NIM: ");
                     String nim = sc.nextLine();
-                    cariNIM(pinjam, nim);
+                    Peminjaman[] copy = new Peminjaman[pinjam.length];
+                    for (int i = 0; i < pinjam.length; i++) {
+                        copy[i] = pinjam[i];
+                    }
+                    sortNIM(copy);
+                    binarySearchNIM(copy, nim);
+                    break;
+                case 6:
+                    pinjam = tambahPeminjaman(pinjam, mhs, buku, sc);
+                    break;
+                case 7:
+                    tampilStatistik(pinjam);
                     break;
             }
         } while (pilih != 0);
-
         System.out.println("Program selesai.");
-
         sc.close();
+
     }
     
 }
