@@ -56,8 +56,21 @@ public class StackTugasMahasiswa24 {
         }
     }
 
+    public Mahasiswa24 peekBottom() {
+        if (!isEmpty()) {
+            return stack[0]; // elemen paling bawah (pertama masuk)
+        } else {
+            System.out.println("Stack kosong! Tidak ada tugas yang dikumpulkan");
+            return null;
+        }
+    }
+
+    public int count() {
+        return top + 1;
+    }
+
     public void print() {
-        for (int i = 0; i <= top; i++) {
+        for (int i = top; i >= 0; i--) {
             System.out.println(stack[i].nama + "\t" + stack[i].nim +"\t" + stack[i].kelas);
         }
         System.out.println("");
