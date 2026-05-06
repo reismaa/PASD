@@ -1,5 +1,7 @@
 package Pertemuan12;
 
+import java.util.Scanner;
+
 public class SLLMain00 {
     public static void main(String[] args) {
         SingleLinkedList24 sll = new SingleLinkedList24();
@@ -17,5 +19,22 @@ public class SLLMain00 {
         sll.insertAfter("Dirga", mhs3);
         sll.insertAt(2, mhs2);
         sll.print();
+
+        Scanner sc = new Scanner(System.in); //Modifikasi input keyboard
+
+        System.out.print("Masukkan NIM      : ");
+        String nim = sc.nextLine();
+        System.out.print("Masukkan Nama     : ");
+        String nama = sc.nextLine();
+        System.out.print("Masukkan Kelas    : ");
+        String kelas = sc.nextLine();
+        System.out.print("Masukkan IPK      : ");
+        Double ipk = sc.nextDouble();
+
+        Mahasiswa24 mhs = new Mahasiswa24(nim, nama, kelas, ipk);
+        sll.addLast(mhs);
+        sll.print();
+
+        sc.close();
     }
 }
