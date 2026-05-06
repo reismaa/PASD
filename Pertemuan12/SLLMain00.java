@@ -20,6 +20,19 @@ public class SLLMain00 {
         sll.insertAt(2, mhs2);
         sll.print();
 
+        // Uji Method Praktikum 2.2 Modifikasi Elemen pada Single Linked List
+        System.out.println("data index 1 : ");
+        sll.getData(1);
+
+        System.out.println("data mahasiswa an Bimon berada pada index : " + sll.indexOf("bimon"));
+        System.out.println();
+
+        sll.removeFirst();
+        sll.removeLast();
+        sll.print();
+        sll.removeAt(0);
+        sll.print();
+
         Scanner sc = new Scanner(System.in); //Modifikasi input keyboard
 
         System.out.print("Masukkan NIM      : ");
