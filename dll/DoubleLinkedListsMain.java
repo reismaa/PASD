@@ -3,6 +3,21 @@ package dll;
 import java.util.Scanner;
 
 public class DoubleLinkedListsMain {
+
+    // Method untuk input data mahasiswa
+    private static Mahasiswa24 inputMahasiswa(Scanner scan) {
+        System.out.print("Masukkan NIM: ");
+        String nim = scan.nextLine();
+        System.out.print("Masukkan Nama: ");
+        String nama = scan.nextLine();
+        System.out.print("Masukkan Kelas: ");
+        String kelas = scan.nextLine();
+        System.out.print("Masukkan IPK: ");
+        double ipk = scan.nextDouble();
+        scan.nextLine(); // Clear buffer
+        return new Mahasiswa24(nim, nama, kelas, ipk);
+    }
+
     public static void main(String[] args) {
         DoubleLinkedList24 list = new DoubleLinkedList24();
         Scanner scan = new Scanner(System.in);
@@ -50,7 +65,5 @@ public class DoubleLinkedListsMain {
         } while (pilihan != 0);
         scan.close();
     }
-
-    
     
 }

@@ -35,6 +35,46 @@ public class DoubleLinkedList24 {
         }
     }
 
+    // Method removeFirst
+    public void removeFirst() {
+        if (isEmpty()) {
+            System.out.println("List kosong, tidak bisa dihapus.");
+            return;
+        }
+        if (head == tail) {
+            head = tail = null;
+        } else {
+            head = head.next;
+            head.prev = null;
+        }
+    }
+
+    // Method removeLast
+    public void removeLast() {
+        if (isEmpty()) {
+            System.out.println("List kosong, tidak bisa dihapus.");
+            return;
+        }
+        if (head == tail) {
+            head = tail = null;
+        } else {
+            tail = tail.prev;
+            tail.next = null;
+        }
+    }
+
+    // Method search
+    public Node24 search(String nim) {
+        Node24 current = head;
+        while (current != null) {
+            if (current.data.nim.equals(nim)) {
+                return current;
+            }
+            current = current.next;
+        }
+        return null; // Tidak ditemukan
+    }
+
     public void insertAfter(String keyNim, Mahasiswa24 data) {
         Node24 current = head;
 
