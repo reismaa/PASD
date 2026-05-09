@@ -15,7 +15,7 @@ public class DoubleLinkedListsMain {
             System.out.println("3. Hapus di awal");
             System.out.println("4. Hapus di akhir");
             System.out.println("5. Tampilkan data");
-            System.out.println("7. Cari Mahasiswa berdasarkan NIM");
+            System.out.println("6. Cari Mahasiswa berdasarkan NIM");
             System.out.println("0. Keluar");
             System.out.print("Pilih menu: ");
             pilihan = scan.nextInt();
@@ -50,5 +50,7 @@ public class DoubleLinkedListsMain {
         } while (pilihan != 0);
         scan.close();
     }
+
+    
     
 }
