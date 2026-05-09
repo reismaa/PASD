@@ -3,10 +3,12 @@ package dll;
 public class DoubleLinkedList24 {
     Node24 head;
     Node24 tail;
+    int size;
 
     public DoubleLinkedList24() {
         head = null;
         tail = null;
+        size = 0;
     }
 
     public boolean isEmpty() {
@@ -22,6 +24,7 @@ public class DoubleLinkedList24 {
             head.prev = newNode;
             head = newNode;
         }
+        size++;
     }
 
     public void addLast(Mahasiswa24 data) {
@@ -33,6 +36,39 @@ public class DoubleLinkedList24 {
             newNode.prev = tail;
             tail = newNode;
         }
+        size++;
+    }
+
+    // Tugas nomor 1. Menambahkan method add() untuk menambahkan node pada indeks tertentu 
+    public void add(int index, Mahasiswa24 data) {
+        if (index < 0 || index > size) {
+            System.out.println("Index tidak valid.");
+            return;
+        }
+
+        if (index == 0){
+            addFirst(data);
+            return;
+        }
+
+        if (index == size) {
+            addLast(data);
+            return;
+        }
+        Node24 current = head;
+
+        for (int i = 0; i < index - 1; i++) {
+            current = current.next;
+        }
+
+        Node24 newNode = new Node24(data);
+        newNode.next = current.next;
+        newNode.prev = current;
+        current.next.prev = newNode;
+        current.next = newNode;
+        size++;
+
+        System.out.println("Data berhasil ditambahkan pada index " + index);
     }
 
     // Method removeFirst
@@ -48,6 +84,7 @@ public class DoubleLinkedList24 {
             head = head.next;
             head.prev = null;
         }
+        size--;
 
         System.out.println("Data sudah berhasil dihapus.");
         System.out.println("Data yang terhapus adalah: ");
@@ -67,10 +104,76 @@ public class DoubleLinkedList24 {
             tail = tail.prev;
             tail.next = null;
         }
+        size--;
 
         System.out.println("Data sudah berhasil dihapus.");
         System.out.println("Data yang terhapus adalah: ");
         dataHapus.tampil();
+    }
+
+    // Tugas nomor 2. Menambahkan method removeAfter() untuk menghapus node setelah data key
+    public void removeAfter(String keyNim) {
+        if (isEmpty()) {
+            System.out.println("Linked List kosong.");
+            return;
+        }
+        Node24 current = head;
+
+        while (current != null && !current.data.nim.equals(keyNim)) {
+            current = current.next;
+        }
+
+        if (current == null || current.next == null) {
+            System.out.println("Node setelah key tidak ditemukan.");
+            return;
+        }
+        Node24 deleted = current.next;
+        if (deleted == tail) {
+            tail = current;
+            current.next = null;
+        } else {
+            current.next = deleted.next;
+            deleted.next.prev = current;
+        }
+        size--;
+
+        System.out.println("Data setelah " + keyNim + " berhasil dihapus.");
+        deleted.data.tampil();
+    }
+
+    // Tugas nomor 3. Menambahkan method remove() untuk menghapus node pada indeks tertentu
+    public void remove(int index) {
+        if (isEmpty()) {
+            System.out.println("Linked List kosong.");
+            return;
+        }
+
+        if (index < 0 || index >= size) {
+            System.out.println("Index tidak valid.");
+            return;
+        }
+        
+        if (index == 0) {
+            removeFirst();
+            return;
+        }
+
+        if (index == size - 1) {
+            removeLast();
+            return;
+        }
+
+        Node24 current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+
+        current.prev.next = current.next;
+        current.next.prev = current.prev;
+        size--;
+
+        System.out.println("Data pada index " + index + " berhasil dihapus.");
+        current.data.tampil();
     }
 
     // Method search
@@ -83,6 +186,47 @@ public class DoubleLinkedList24 {
             current = current.next;
         }
         return null; // Tidak ditemukan
+    }
+
+    // Tugas nomor 4. Menambahkan method getFirst(), getLast(), dan getIndex()
+    public void getFirst() {
+        if (isEmpty()) {
+            System.out.println("Linked List kosong.");
+            return;
+        }
+        System.out.println("Data pertama:");
+        head.data.tampil();
+    }
+
+    public void getLast() {
+        if (isEmpty()) {
+            System.out.println("Linked List kosong.");
+            return;
+        }
+        System.out.println("Data terakhir:");
+        tail.data.tampil();
+    }
+
+    public void getIndex(int index) {
+        if (isEmpty()) {
+            System.out.println("Linked List kosong.");
+            return;
+        }
+        if (index < 0 || index >= size) {
+            System.out.println("Index tidak valid.");
+            return;
+        }
+        Node24 current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        System.out.println("Data pada index " + index + ":");
+        current.data.tampil();
+    }
+
+    // Tugas nompr 5. Menambahkan kode program dan fungsi agar dapat membaca size/ jumlah data 
+    public int size() {
+        return size;
     }
 
     public void insertAfter(String keyNim, Mahasiswa24 data) {
@@ -127,6 +271,7 @@ public class DoubleLinkedList24 {
             current.data.tampil();
             current =current.next;
         }
+        System.out.println("Jumlah data: " + size);
     }
     
 }
