@@ -107,6 +107,11 @@ public class DoubleLinkedList24 {
     }
 
     public void print() {
+        if (isEmpty()) {
+            System.out.println("List kosong.");
+            return;
+        }
+
         Node24 current = head;
         while (current != null) {
             current.data.tampil();
