@@ -1,4 +1,4 @@
-package CaseMethod2;
+package CM2;
 
 public class DoubleLinkedListPesanan {
     NodePesanan head;
