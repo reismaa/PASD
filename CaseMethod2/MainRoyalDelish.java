@@ -3,11 +3,9 @@ package CaseMethod2;
 import java.util.Scanner;
 
 public class MainRoyalDelish {
-
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-        DoubleLinkedListPembeli antrian = new DoubleLinkedListPembeli();
-        DoubleLinkedListPesanan daftarPesanan = new DoubleLinkedListPesanan();
+        DoubleLinkedList royalDelish = new DoubleLinkedList();
         int noAntrian = 1;
         int pilihan;
 
@@ -31,17 +29,17 @@ public class MainRoyalDelish {
                     System.out.print("No HP         : ");
                     String noHP = scan.nextLine();
                     Pembeli p = new Pembeli(noAntrian, namaPembeli, noHP);
-                    antrian.addLast(p);
+                    royalDelish.addLastPembeli(p);
                     System.out.println("Antrian berhasil ditambahkan dengan nomor: " + noAntrian);
                     noAntrian++;
                     break;
                 
                 case 2:
-                    antrian.print();
+                    royalDelish.printPembeli();
                     break;
                 
                 case 3:
-                    Pembeli dilayani = antrian.removeFirst();
+                    Pembeli dilayani = royalDelish.removeFirstPembeli();
                     if (dilayani != null) {
                         System.out.print("Kode Pesanan  : ");
                         int kodePesanan = scan.nextInt();
@@ -53,14 +51,14 @@ public class MainRoyalDelish {
                         scan.nextLine();
 
                         Pesanan pesanan = new Pesanan(kodePesanan, namaPesanan, harga);
-                        daftarPesanan.addLast(pesanan);
+                        royalDelish.addLastPesanan(pesanan);
 
                         System.out.println(dilayani.namaPembeli + " telah memesan " + namaPesanan);
                     }
                     break;
 
                 case 4:
-                    daftarPesanan.print();
+                    royalDelish.printPesanan();
                     break;
 
                 case 0:
@@ -73,5 +71,4 @@ public class MainRoyalDelish {
         } while (pilihan != 0);
         scan.close();
     }
-    
 }
