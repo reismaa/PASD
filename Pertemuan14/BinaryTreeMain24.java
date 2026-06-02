@@ -24,6 +24,12 @@ public class BinaryTreeMain24 {
         bst.add(new Mahasiswa24("244160131", "Devi", "A", 3.72));
         bst.add(new Mahasiswa24("244160205", "Ehsan", "D", 3.37));
         bst.add(new Mahasiswa24("244160170", "Fizi", "B", 3.46));
+
+        System.out.println("\n=== Uji addRekursif ===");
+        bst.addRekursif(new Mahasiswa24("244160131", "Devi", "A", 3.72));
+        bst.addRekursif(new Mahasiswa24("244160205", "Ehsan", "D", 3.37));
+        bst.addRekursif(new Mahasiswa24("244160170", "Fizi", "B", 3.46));
+
         System.out.println("\nDaftar semua mahasiswa setelah penambahan 3 mahasiswa:");
         System.out.println("InOrder Traversal:");
         bst.traverseInOrder(bst.root);
@@ -31,6 +37,14 @@ public class BinaryTreeMain24 {
         bst.traversePreOrder(bst.root);
         System.out.println("\nPostOrder Traversal:");
         bst.traversePostOrder(bst.root);
+
+        //Tugas Praktikum
+        System.out.println("\n=== MAHASISWA DENGAN IPK TERKECIL ===");
+        bst.cariMinIPK();
+        System.out.println("\n=== MAHASISWA DENGAN IPK TERBESAR ===");
+        bst.cariMaxIPK();
+        System.out.println("\n=== MAHASISWA DENGAN IPK DI ATAS 3.50 ===");
+        bst.tampilMahasiswaIPKdiAtas(3.50);
         
         System.out.println("\nPenghapusan data mahasiswa");
         bst.delete(3.57);
